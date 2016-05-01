@@ -18,8 +18,8 @@ To include Volley Wrapper into your app clone the repository into your machine a
 # Usage 
 On this section I will explain how to use Volley Wrapper in your project.
 
-## Initialisation
-The first thing you'll need to do before you start using Volley Wrapper to send requests is to initialise it. This can be done by using one of the methods shown below. 
+## Initialization
+The first thing you'll need to do before you start using Volley Wrapper to send requests is to initialize it. This can be done by using one of the methods shown below. 
 
 * If you want Volley Wrapper to create a default `RequestQueue`, then use this method:
 
@@ -34,9 +34,9 @@ VolleyWrapper.init(requestQueue);
 ```
 
 ## Creating requests
-Before you start sending requets using Volley Wrapper you have to create them. All requests should be created as classes that extend from `BaseRequest` or, if your request will return JSON object as a response and you want to use Gson to parse it, you can extend from `GsonRequest`.
+Before you start sending requests using Volley Wrapper you have to create them. All requests should be created as classes that extend from `BaseRequest` or, if your request will return JSON object as a response and you want to use Gson to parse it, you can extend from `GsonRequest`.
 
-I will show 2 examples below, on how to create a GET request and a POST one. These examples are obviously not of useful requests, they are just to give you an idea of how to structure your requets, set the URL, add params, etc. On a real project, you might want to create a different request class for each request you need to call (to keep a clean and well structured code base), but that is not needed if you prefer a different approach.
+I will show 2 examples below, on how to create a GET request and a POST one. These examples are obviously not of useful requests, they are just to give you an idea of how to structure your requests, set the URL, add params, etc. On a real project, you might want to create a different request class for each request you need to call (to keep a clean and well structured code base), but that is not needed if you prefer a different approach.
 
 ### GET request example
 
@@ -136,7 +136,7 @@ public class PostResponse {
 ```
 
 ## Sending requests
-Once Volley Wrapper has being initilised and you have created your requests you can start sending them to the server. To do so, you can use one of the methods shown below.
+Once Volley Wrapper has being initilized and you have created your requests you can start sending them to the server. To do so, you can use one of the methods shown below.
 
 * If you want to send an asynchronous request and receive the response on a callback, use the following method:
 
