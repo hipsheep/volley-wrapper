@@ -1,0 +1,11 @@
+<manifest package="com.hipsheep.volleywrapper"
+		  xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<application
+		android:allowBackup="false"
+		android:label="@string/app_name"
+		android:supportsRtl="true">
+
+	</application>
+
+</manifest>
