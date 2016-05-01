@@ -7,13 +7,58 @@ This project is a wrapper of the [Volley network library](http://developer.andro
 # Dependencies
 This project has the following dependencies:
 
-* [Volley network library](http://developer.android.com/training/volley/index.html) (already included in the project, as an aar).
-* [Gson library](https://github.com/google/gson) (already included in the project, as a Maven dependency).
+* [Volley network library](http://developer.android.com/training/volley/index.html)
+* [Gson library](https://github.com/google/gson)
 
-When you integrate Volley Wrapper into your app as an aar file, you'll have to add these dependencies to your project.
+Both libraries are already added to the project as Maven dependencies.
+
+When you integrate Volley Wrapper into your app, you'll have to add the Gson dependency to your app's `build.gradle` file, as shown below:
+
+```gradle
+dependencies {
+	// The Gson library is used to easily parse JSON objects
+	compile 'com.google.code.gson:gson:2.4'
+}
+```
+
+The Volley dependency will be implicitly added when you include the Volley Wrapper one (see the section below for more details).
 
 # How to include the library
-To include Volley Wrapper into your app clone the repository into your machine and build the project using Gradle. This will create an aar file, that you can include into your project in Android Studio.
+
+## From Maven
+You can import Volley Wrapper into your project as a Maven dependency, as shown below.
+
+```gradle
+repositories {
+	maven {
+		// Include the URL of the Maven repo where the Volley Wrapper library is published. Release 
+		// candidates are hosted on the "canary" channel and production releases on the "release" one. 
+		// To switch between channels change the last part of this URL to "canary" or "release"
+		url "https://raw.github.com/hipsheep/volley-wrapper-distribution/canary"
+	}
+}
+
+dependencies {
+	// Import Volley Wrapper library
+	compile('com.hipsheep:volleywrapper:1.0.0-rc1@aar') {
+	        // Include Volley dependency
+	        transitive = true;
+    }
+}
+```
+
+As mentioned on the previous section, the Volley library dependency will be implicitly added when you include the Volley Wrapper one. However, if you wish to add your own version of Volley you can exclude the implicit dependency created by Volley Wrapper. To do this you have to import Volley Wrapper like this:
+
+```gradle
+dependencies {
+	// Import Volley Wrapper library
+	compile 'com.hipsheep:volleywrapper:1.0.0-rc1@aar'
+}
+```
+
+## From local aar file
+
+Alternatively, you can include Volley Wrapper into your app by cloning the repository into your machine and building the project using Gradle. This will create an aar file that you can include into your project locally.
 
 # Usage 
 On this section I will explain how to use Volley Wrapper in your project.
@@ -136,7 +181,7 @@ public class PostResponse {
 ```
 
 ## Sending requests
-Once Volley Wrapper has being initilized and you have created your requests you can start sending them to the server. To do so, you can use one of the methods shown below.
+Once Volley Wrapper has being initialized and you have created your requests you can start sending them to the server. To do so, you can use one of the methods shown below.
 
 * If you want to send an asynchronous request and receive the response on a callback, use the following method:
 
