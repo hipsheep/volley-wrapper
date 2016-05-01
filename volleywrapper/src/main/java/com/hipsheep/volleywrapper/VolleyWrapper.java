@@ -26,14 +26,25 @@ public class VolleyWrapper {
 
 
 	/**
-	 * Initializes the request queue that will be used for queueing the requests to send to the
-	 * server.
+	 * Initializes the Volley Wrapper library, and creates the request queue that will be used for queueing the requests to send
+	 * to the server.
 	 *
 	 * @param context
 	 * 		{@link Context} used to create the request queue.
 	 */
 	public static void init(Context context) {
 		sRequestQueue = Volley.newRequestQueue(context);
+	}
+
+	/**
+	 * Initializes the Volley Wrapper library, and sets the request queue that will be used for queueing the requests to send
+	 * to the server.
+	 *
+	 * @param requestQueue
+	 * 		{@link RequestQueue} that will be used for queueing the requests to send to the server.
+	 */
+	public static void init(RequestQueue requestQueue) {
+		sRequestQueue = requestQueue;
 	}
 
 	/**
