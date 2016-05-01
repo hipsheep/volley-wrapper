@@ -24,6 +24,69 @@ android {
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}
 	}
+
+	lintOptions {
+		abortOnError false
+	}
+}
+
+assembleRelease.doLast {
+	// Create Javadoc files for all classes
+	tasks.createJavadoc.execute()
+
+	// Create Javadoc jar
+	tasks.createJavadocJar.execute()
+
+	// Group release files on the "build" dir
+	tasks.groupReleaseFiles.execute()
+}
+
+task createJavadoc(type: Javadoc) {
+	description('Creates the javadoc HTML files for all the library classes.')
+
+	source = ["src/main/java"]
+
+	failOnError false
+
+	def androidJar = android.sdkDirectory.toString() + "/platforms/" + android.compileSdkVersion + "/android.jar"
+	classpath = files(android.libraryVariants.release.javaCompile.classpath.files, androidJar)
+
+	options {
+		links "http://docs.oracle.com/javase/7/docs/api/"
+		linksOffline "http://d.android.com/reference","${android.sdkDirectory}/docs/reference"
+	}
+
+	exclude '**/BuildConfig.java'
+	exclude '**/R.java'
+}
+
+task createJavadocJar(type: Jar) {
+	description('Creates the javadoc jar for all the library classes.')
+
+	classifier = 'javadoc'
+	from 'build/docs/javadoc/'
+}
+
+// Task that copies the .aar and .jar files to the root of the "build" dir and renames them, to have
+// them ready to upload to Maven
+task groupReleaseFiles(type: Copy) {
+	description('Copies the assembled .jar and .aar files to the root of the "build" folder and renames them using the current version.')
+
+	def libVersion = android.defaultConfig.versionName
+
+	// Copy and rename aar file
+	from('build/outputs/aar/') {
+		include '*-release.aar'
+		rename '-release.aar', '-' + libVersion + '.aar'
+	}
+
+	// Copy and rename javadoc jar file
+	from('build/libs/') {
+		include '*.jar'
+		rename 'volleywrapper', 'volleywrapper-' + libVersion
+	}
+
+	into 'build'
 }
 
 // Task that returns the current library version, needed to publish the aar to Maven
