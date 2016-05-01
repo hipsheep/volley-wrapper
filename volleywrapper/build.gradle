@@ -1,3 +1,10 @@
+repositories {
+	maven {
+		// Our Maven repo URL (it can end with "release" or "canary")
+		url "https://raw.github.com/hipsheep/volley-wrapper-distribution/canary"
+	}
+}
+
 apply plugin: 'com.android.library'
 
 android {
@@ -19,10 +26,23 @@ android {
 	}
 }
 
+// Task that returns the current library version, needed to publish the aar to Maven
+task getVersion << {
+	println android.defaultConfig.versionName
+}
+
+def volleyVersion = '6.0.1_r31'
+
+// Task that returns the current version of Volley being used, needed to publish the aar to Maven
+task getVolleyVersion << {
+	println volleyVersion
+}
+
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 
-	compile project(':libraries:volley_6.0.1-r10')
+	// Include Volley library from our Maven repository
+	compile 'com.hipsheep:volley:' + volleyVersion + '@aar'
 
 	// The Gson library is used to easily parse JSON objects
 	compile 'com.google.code.gson:gson:2.4'

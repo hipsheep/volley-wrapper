@@ -1,2 +1,1 @@
 include ':volleywrapper'
-include ':libraries:volley_6.0.1-r10'
