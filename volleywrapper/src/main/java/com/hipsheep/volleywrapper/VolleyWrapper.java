@@ -33,7 +33,7 @@ public class VolleyWrapper {
 	 * 		{@link Context} used to create the request queue.
 	 */
 	public static void init(Context context) {
-		Volley.newRequestQueue(context);
+		sRequestQueue = Volley.newRequestQueue(context);
 	}
 
 	/**
