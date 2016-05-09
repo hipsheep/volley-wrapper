@@ -34,8 +34,8 @@ repositories {
 	
 	maven {
 		// Include the URL of the Maven repo where the Volley library is published.
-        	url "https://raw.github.com/hipsheep/volley-wrapper-distribution/volley"
-    	}
+		url "https://raw.github.com/hipsheep/volley-wrapper-distribution/volley"
+	}
 }
 
 dependencies {
