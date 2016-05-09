@@ -8,7 +8,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
 import com.hipsheep.volleywrapper.network.request.BaseRequest;
-import com.hipsheep.volleywrapper.network.response.ResponseCallback;
+import com.hipsheep.volleywrapper.network.model.ResponseCallback;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;

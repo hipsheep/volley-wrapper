@@ -1,4 +1,4 @@
-package com.hipsheep.volleywrapper.network.response;
+package com.hipsheep.volleywrapper.network.model;
 
 import com.android.volley.VolleyError;
 

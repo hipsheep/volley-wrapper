@@ -11,7 +11,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.RequestFuture;
-import com.hipsheep.volleywrapper.network.response.ResponseCallback;
+import com.hipsheep.volleywrapper.network.model.ResponseCallback;
 
 import org.json.JSONObject;
 
