@@ -31,6 +31,11 @@ repositories {
 		// To switch between channels change the last part of this URL to "canary" or "release"
 		url "https://raw.github.com/hipsheep/volley-wrapper-distribution/release"
 	}
+	
+	maven {
+		// Include the URL of the Maven repo where the Volley library is published.
+        	url "https://raw.github.com/hipsheep/volley-wrapper-distribution/volley"
+    	}
 }
 
 dependencies {
