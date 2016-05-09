@@ -47,7 +47,7 @@ As mentioned on the previous section, the Volley library dependency will be impl
 ```gradle
 dependencies {
 	// Import Volley Wrapper library
-	compile 'com.hipsheep:volleywrapper:1.0.0-rc1@aar'
+	compile 'com.hipsheep:volleywrapper:1.0.0@aar'
 }
 ```
 
