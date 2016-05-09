@@ -59,6 +59,9 @@ dependencies {
 # Documentation
 All the documentation on how to [setup](https://github.com/hipsheep/volley-wrapper/wiki/2.-Setup) and [use](https://github.com/hipsheep/volley-wrapper/wiki/3.-Usage) this library can be found in the [Wiki](https://github.com/hipsheep/volley-wrapper/wiki).
 
+# Contribution
+If you want to propose a change, report a bug or just ask a question you can do it by creating an [issue](https://github.com/hipsheep/volley-wrapper/issues). If you want to contribute with code changes you can create a [pull request](https://github.com/hipsheep/volley-wrapper/pulls) to the _develop_ branch (please make sure to create an issue before working on a PR so we can discuss whether the change proposed makes sense to be added to the library).
+
 # License
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
