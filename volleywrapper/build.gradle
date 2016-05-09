@@ -16,7 +16,7 @@ android {
 		targetSdkVersion 23
 
 		versionCode 10000
-		versionName "1.0.0-rc2"
+		versionName "1.0.0"
 
 		// Set AndroidJUnitRunner as the default test instrumentation runner, to use JUnit 4 test classes
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
