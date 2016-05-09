@@ -11,6 +11,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.RequestFuture;
+import com.hipsheep.volleywrapper.Configuration;
 import com.hipsheep.volleywrapper.network.model.ResponseCallback;
 
 import org.json.JSONObject;
@@ -26,28 +27,10 @@ import java.util.Map;
 public abstract class BaseRequest<T> extends Request<T> {
 
 	/**
-	 * Body content type to use for all requests (set through
-	 * {@link com.hipsheep.volleywrapper.VolleyWrapper#setDefaultBodyContentType(String)}).
+	 * Default configuration to use for all requests (set through
+	 * {@link com.hipsheep.volleywrapper.VolleyWrapper#setDefaultConfiguration(Configuration)}).
 	 */
-	private static String sDefaultBodyContentType;
-
-	/**
-	 * {@link RetryPolicy} to use for all requests (set through
-	 * {@link com.hipsheep.volleywrapper.VolleyWrapper#setDefaultRetryPolicy(RetryPolicy)}).
-	 */
-	private static RetryPolicy sDefaultRetryPolicy;
-
-	/**
-	 * Flag that sets whether all requests should cache responses or not (set through
-	 * {@link com.hipsheep.volleywrapper.VolleyWrapper#setDefaultShouldCache(Boolean)}).
-	 */
-	private static Boolean sDefaultShouldCache;
-
-	/**
-	 * Default headers to use for all requests (set through
-	 * {@link com.hipsheep.volleywrapper.VolleyWrapper#setDefaultHeaders(Map)}).
-	 */
-	private static Map<String, String> sDefaultHeaders;
+	private static Configuration sDefaultConfiguration = new Configuration();
 
 	/**
 	 * Tag used to log errors, warnings, etc. on standard output, with the name of the class that extends {@link BaseRequest}.
@@ -96,13 +79,15 @@ public abstract class BaseRequest<T> extends Request<T> {
 		super(method, url, null);
 
 		// Set whether to cache responses or not, if the user set the value through VolleyWrapper
-		if (sDefaultShouldCache != null) {
-			setShouldCache(sDefaultShouldCache);
+		Boolean defaultIsShouldCache = sDefaultConfiguration.isShouldCache();
+		if (defaultIsShouldCache != null) {
+			setShouldCache(defaultIsShouldCache);
 		}
 
 		// Set the default retry policy, if the user set one through VolleyWrapper
-		if (sDefaultRetryPolicy != null) {
-			setRetryPolicy(sDefaultRetryPolicy);
+		RetryPolicy defaultRetryPolicy = sDefaultConfiguration.getRetryPolicy();
+		if (defaultRetryPolicy != null) {
+			setRetryPolicy(defaultRetryPolicy);
 		}
 	}
 
@@ -135,12 +120,15 @@ public abstract class BaseRequest<T> extends Request<T> {
 	public String getBodyContentType() {
 		// We must set the content type here for POST requests, otherwise the server will fail to parse
 		// the headers (because Volley uses a different content type value by default)
-		return sDefaultBodyContentType != null ? sDefaultBodyContentType : super.getBodyContentType();
+		String defaultBodyContentType = sDefaultConfiguration.getBodyContentType();
+		return defaultBodyContentType != null ? defaultBodyContentType : super.getBodyContentType();
 	}
 
 	@Override
 	public Map<String, String> getHeaders() throws AuthFailureError {
-		return sDefaultHeaders != null ? sDefaultHeaders : super.getHeaders();
+		Map<String, String> defaultHeaders = sDefaultConfiguration.getHeaders();
+
+		return defaultHeaders != null ? defaultHeaders : super.getHeaders();
 	}
 
 	/**
@@ -252,43 +240,13 @@ public abstract class BaseRequest<T> extends Request<T> {
 	}
 
 	/**
-	 * Sets a retry policy to use as default for all requests.
+	 * Sets a default configuration to use for all requests.
 	 *
-	 * @param retryPolicy
-	 * 		{@link RetryPolicy} to use for all requests.
+	 * @param configuration
+	 * 		Default configuration to use for all requests.
 	 */
-	public static void setDefaultRetryPolicy(RetryPolicy retryPolicy) {
-		sDefaultRetryPolicy = retryPolicy;
-	}
-
-	/**
-	 * Sets whether all requests should cache responses or not.
-	 *
-	 * @param shouldCache
-	 * 		{@code true} if all requests should cache responses, or {@code false} otherwise.
-	 */
-	public static void setDefaultShouldCache(Boolean shouldCache) {
-		sDefaultShouldCache = shouldCache;
-	}
-
-	/**
-	 * Sets a body content type to use as default for all requests.
-	 *
-	 * @param defaultBodyContentType
-	 * 		Body content type to use for all requests.
-	 */
-	public static void setDefaultBodyContentType(String defaultBodyContentType) {
-		sDefaultBodyContentType = defaultBodyContentType;
-	}
-
-	/**
-	 * Sets the default headers to use for all requests.
-	 *
-	 * @param defaultHeaders
-	 * 		Default headers to use for all requests.
-	 */
-	public static void setDefaultHeaders(Map<String, String> defaultHeaders) {
-		sDefaultHeaders = defaultHeaders;
+	public static void setDefaultConfiguration(Configuration configuration) {
+		sDefaultConfiguration = configuration;
 	}
 
 }

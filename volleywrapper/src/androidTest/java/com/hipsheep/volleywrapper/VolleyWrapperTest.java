@@ -47,7 +47,7 @@ public class VolleyWrapperTest {
 	@BeforeClass
 	public static void initVolleyWrapper() {
 		VolleyWrapper.init(InstrumentationRegistry.getTargetContext());
-		VolleyWrapper.setDefaultBodyContentType("application/json");
+		VolleyWrapper.setDefaultConfiguration(new Configuration.Builder().setBodyContentType("application/json").build());
 	}
 
 	@Test

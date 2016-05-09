@@ -48,43 +48,13 @@ public class VolleyWrapper {
 	}
 
 	/**
-	 * Sets a retry policy to use as default for all requests.
+	 * Sets a default configuration to use for all requests.
 	 *
-	 * @param retryPolicy
-	 * 		{@link RetryPolicy} to use for all requests.
+	 * @param configuration
+	 * 		Default configuration to use for all requests.
 	 */
-	public static void setDefaultRetryPolicy(RetryPolicy retryPolicy) {
-		BaseRequest.setDefaultRetryPolicy(retryPolicy);
-	}
-
-	/**
-	 * Sets whether all requests should cache responses or not.
-	 *
-	 * @param shouldCache
-	 * 		{@code true} if all requests should cache responses, or {@code false} otherwise.
-	 */
-	public static void setDefaultShouldCache(Boolean shouldCache) {
-		BaseRequest.setDefaultShouldCache(shouldCache);
-	}
-
-	/**
-	 * Sets a body content type to use as default for all requests.
-	 *
-	 * @param defaultBodyContentType
-	 * 		Body content type to use for all requests.
-	 */
-	public static void setDefaultBodyContentType(String defaultBodyContentType) {
-		BaseRequest.setDefaultBodyContentType(defaultBodyContentType);
-	}
-
-	/**
-	 * Sets the default headers to use for all requests.
-	 *
-	 * @param defaultHeaders
-	 * 		Default headers to use for all requests.
-	 */
-	public static void setDefaultHeaders(Map<String, String> defaultHeaders) {
-		BaseRequest.setDefaultHeaders(defaultHeaders);
+	public static void setDefaultConfiguration(Configuration configuration) {
+		BaseRequest.setDefaultConfiguration(configuration);
 	}
 
 	/**

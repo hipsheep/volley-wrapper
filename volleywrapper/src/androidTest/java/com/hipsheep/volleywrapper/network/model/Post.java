@@ -30,11 +30,11 @@ public class Post {
 		mBody = body;
 	}
 
-	public int getUserId() {
+	public Integer getUserId() {
 		return mUserId;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return mId;
 	}
 
