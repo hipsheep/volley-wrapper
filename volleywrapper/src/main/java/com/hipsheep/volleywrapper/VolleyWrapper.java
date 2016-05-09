@@ -116,6 +116,10 @@ public class VolleyWrapper {
 	 * Sends a request to the server synchronously, and returns the response, or throws an {@link Exception} if an error occurred.
 	 * <p>
 	 * IMPORTANT: Don't call this method on the Main Thread or the app will freeze.
+	 * <p>
+	 * This method "returns" errors through the {@link Exception}s it throws. The {@link ExecutionException} is the only one of
+	 * the 3 that will contain a {@link com.android.volley.VolleyError} inside, which you can get through the
+	 * {@link ExecutionException#getCause()} method.
 	 *
 	 * @param request
 	 * 		{@link Request} to send to the server.
