@@ -4,13 +4,11 @@ import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
-import com.hipsheep.volleywrapper.network.request.BaseRequest;
 import com.hipsheep.volleywrapper.network.model.ResponseCallback;
+import com.hipsheep.volleywrapper.network.request.BaseRequest;
 
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -104,8 +102,14 @@ public class VolleyWrapper {
 		request.setRequestFuture(requestFuture);
 		sRequestQueue.add(request);
 
-		// Time out if the response doesn't come back on 30 seconds
-		return requestFuture.get(30, TimeUnit.SECONDS);
+		// If a sync timeout was set, then use it
+		Long syncTimeout = BaseRequest.getDefaultConfiguration().getSyncTimeout();
+		if (syncTimeout != null) {
+			// Time out if the response doesn't come back on X seconds
+			return requestFuture.get(syncTimeout, TimeUnit.SECONDS);
+		} else {
+			return requestFuture.get();
+		}
 	}
 
 }

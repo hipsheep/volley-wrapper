@@ -3,6 +3,7 @@ package com.hipsheep.volleywrapper;
 import com.android.volley.RetryPolicy;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Configuration that can be set to VolleyWrapper through the {@link VolleyWrapper#setDefaultConfiguration(Configuration)}
@@ -19,6 +20,8 @@ public class Configuration {
 	private String mBodyContentType;
 
 	private Map<String, String> mHeaders;
+
+	private Long mSyncTimeout;
 
 
 	public RetryPolicy getRetryPolicy() {
@@ -51,6 +54,14 @@ public class Configuration {
 
 	public void setHeaders(Map<String, String> headers) {
 		mHeaders = headers;
+	}
+
+	public Long getSyncTimeout() {
+		return mSyncTimeout;
+	}
+
+	public void setSyncTimeout(Long syncTimeout) {
+		mSyncTimeout = syncTimeout;
 	}
 
 	/*
@@ -113,6 +124,22 @@ public class Configuration {
 		 */
 		public Builder setHeaders(Map<String, String> headers) {
 			mConfiguration.setHeaders(headers);
+
+			return this;
+		}
+
+		/**
+		 * Sets the timeout value (in seconds) to use for sync requests.
+		 * <p>
+		 * This is the value to use when calling the {@link com.android.volley.toolbox.RequestFuture#get(long, TimeUnit)} method,
+		 * not to be confused with the timeout value that can be set using a {@link RetryPolicy} through the
+		 * {@link #setRetryPolicy(RetryPolicy)} method.
+		 *
+		 * @param syncTimeout
+		 * 		Timeout value (in seconds) to use for sync requests.
+		 */
+		public Builder setSyncTimeout(Long syncTimeout) {
+			mConfiguration.setSyncTimeout(syncTimeout);
 
 			return this;
 		}

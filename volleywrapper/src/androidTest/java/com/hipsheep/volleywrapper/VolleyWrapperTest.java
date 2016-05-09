@@ -5,10 +5,10 @@ import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
+import com.hipsheep.volleywrapper.network.model.Post;
 import com.hipsheep.volleywrapper.network.model.ResponseCallback;
 import com.hipsheep.volleywrapper.network.request.GetRequest;
 import com.hipsheep.volleywrapper.network.request.PostRequest;
-import com.hipsheep.volleywrapper.network.model.Post;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -47,7 +47,13 @@ public class VolleyWrapperTest {
 	@BeforeClass
 	public static void initVolleyWrapper() {
 		VolleyWrapper.init(InstrumentationRegistry.getTargetContext());
-		VolleyWrapper.setDefaultConfiguration(new Configuration.Builder().setBodyContentType("application/json").build());
+
+		Configuration configuration = new Configuration.Builder()
+				.setBodyContentType("application/json")
+				.setSyncTimeout(30L)
+				.build();
+
+		VolleyWrapper.setDefaultConfiguration(configuration);
 	}
 
 	@Test

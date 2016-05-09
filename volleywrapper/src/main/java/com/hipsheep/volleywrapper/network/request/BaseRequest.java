@@ -249,4 +249,13 @@ public abstract class BaseRequest<T> extends Request<T> {
 		sDefaultConfiguration = configuration;
 	}
 
+	/**
+	 * Returns the default configuration that is used for all requests.
+	 *
+	 * @return The default configuration that is used for all requests.
+	 */
+	public static Configuration getDefaultConfiguration() {
+		return sDefaultConfiguration;
+	}
+
 }
