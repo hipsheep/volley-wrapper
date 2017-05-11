@@ -8,15 +8,15 @@ repositories {
 apply plugin: 'com.android.library'
 
 android {
-	compileSdkVersion 23
-	buildToolsVersion "23.0.2"
+	compileSdkVersion 25
+	buildToolsVersion "25.0.3"
 
 	defaultConfig {
 		minSdkVersion 9
-		targetSdkVersion 23
+		targetSdkVersion 25
 
-		versionCode 10000
-		versionName "1.0.0"
+		versionCode 10001
+		versionName "1.0.1"
 
 		// Set AndroidJUnitRunner as the default test instrumentation runner, to use JUnit 4 test classes
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -34,16 +34,8 @@ android {
 	}
 }
 
-assembleRelease.doLast {
-	// Create Javadoc files for all classes
-	tasks.createJavadoc.execute()
-
-	// Create Javadoc jar
-	tasks.createJavadocJar.execute()
-
-	// Group release files on the "build" dir
-	tasks.groupReleaseFiles.execute()
-}
+// After the build finishes, create Javadoc and group release files on the "build" dir
+build.finalizedBy('createJavadocJar', 'groupReleaseFiles')
 
 task createJavadoc(type: Javadoc) {
 	description('Creates the javadoc HTML files for all the library classes.')
@@ -64,7 +56,7 @@ task createJavadoc(type: Javadoc) {
 	exclude '**/R.java'
 }
 
-task createJavadocJar(type: Jar) {
+task createJavadocJar(type: Jar, dependsOn: 'createJavadoc') {
 	description('Creates the javadoc jar for all the library classes.')
 
 	classifier = 'javadoc'
@@ -98,7 +90,7 @@ task getVersion << {
 	println android.defaultConfig.versionName
 }
 
-def volleyVersion = '6.0.1_r31'
+def volleyVersion = '1.0.0'
 
 // Task that returns the current version of Volley being used, needed to publish the aar to Maven
 task getVolleyVersion << {
@@ -109,19 +101,19 @@ dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 
 	// Include Volley library from our Maven repository
-	compile 'com.hipsheep:volley:' + volleyVersion + '@aar'
+	compile 'com.android.volley:volley:' + volleyVersion
 
 	// The Gson library is used to easily parse JSON objects
-	compile 'com.google.code.gson:gson:2.4'
+	compile 'com.google.code.gson:gson:2.7'
 
 	testCompile 'junit:junit:4.12'
 
 	// Instrumentation test libraries
 
-	androidTestCompile 'com.android.support:support-annotations:23.3.0'
+	androidTestCompile 'com.android.support:support-annotations:25.3.1'
 
-	androidTestCompile 'com.android.support.test:runner:0.4.1'
-	androidTestCompile 'com.android.support.test:rules:0.4.1'
+	androidTestCompile 'com.android.support.test:runner:0.5'
+	androidTestCompile 'com.android.support.test:rules:0.5'
 
 	androidTestCompile 'org.hamcrest:hamcrest-library:1.3'
 }
