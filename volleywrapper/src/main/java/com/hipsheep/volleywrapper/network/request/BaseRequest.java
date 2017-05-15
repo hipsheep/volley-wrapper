@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.RequestFuture;
 import com.hipsheep.volleywrapper.Configuration;
+import com.hipsheep.volleywrapper.VolleyWrapper;
 import com.hipsheep.volleywrapper.network.model.ResponseCallback;
 
 import org.json.JSONObject;
@@ -25,12 +26,6 @@ import java.util.Map;
  * @author Franco Sabadini (fsabadi@gmail.com)
  */
 public abstract class BaseRequest<T> extends Request<T> {
-
-	/**
-	 * Default configuration to use for all requests (set through
-	 * {@link com.hipsheep.volleywrapper.VolleyWrapper#setDefaultConfiguration(Configuration)}).
-	 */
-	private static Configuration sDefaultConfiguration = new Configuration();
 
 	/**
 	 * Tag used to log errors, warnings, etc. on standard output, with the name of the class that extends {@link BaseRequest}.
@@ -83,20 +78,22 @@ public abstract class BaseRequest<T> extends Request<T> {
 	protected BaseRequest(int method, String url) {
 		super(method, url, null);
 
+		Configuration defaultConfiguration = VolleyWrapper.getDefaultConfiguration();
+
 		// Set whether to cache responses or not (if it was set)
-		Boolean defaultIsShouldCache = sDefaultConfiguration.isShouldCache();
+		Boolean defaultIsShouldCache = defaultConfiguration.isShouldCache();
 		if (defaultIsShouldCache != null) {
 			setShouldCache(defaultIsShouldCache);
 		}
 
 		// Set the default retry policy (if it was set)
-		RetryPolicy defaultRetryPolicy = sDefaultConfiguration.getRetryPolicy();
+		RetryPolicy defaultRetryPolicy = defaultConfiguration.getRetryPolicy();
 		if (defaultRetryPolicy != null) {
 			setRetryPolicy(defaultRetryPolicy);
 		}
 
 		// Add the default headers (if any)
-		Map<String, String> defaultHeaders = sDefaultConfiguration.getHeaders();
+		Map<String, String> defaultHeaders = defaultConfiguration.getHeaders();
 		if (defaultHeaders != null) {
 			mHeaders.putAll(defaultHeaders);
 		}
@@ -129,7 +126,7 @@ public abstract class BaseRequest<T> extends Request<T> {
 
 	@Override
 	public String getBodyContentType() {
-		String defaultBodyContentType = sDefaultConfiguration.getBodyContentType();
+		String defaultBodyContentType = VolleyWrapper.getDefaultConfiguration().getBodyContentType();
 		return defaultBodyContentType != null ? defaultBodyContentType : super.getBodyContentType();
 	}
 
@@ -258,25 +255,6 @@ public abstract class BaseRequest<T> extends Request<T> {
 	 */
 	public void setRequestFuture(RequestFuture<T> requestFuture) {
 		mRequestFuture = requestFuture;
-	}
-
-	/**
-	 * Sets a default configuration to use for all requests.
-	 *
-	 * @param configuration
-	 * 		Default configuration to use for all requests.
-	 */
-	public static void setDefaultConfiguration(Configuration configuration) {
-		sDefaultConfiguration = configuration;
-	}
-
-	/**
-	 * Returns the default configuration that is used for all requests.
-	 *
-	 * @return The default configuration that is used for all requests.
-	 */
-	public static Configuration getDefaultConfiguration() {
-		return sDefaultConfiguration;
 	}
 
 }

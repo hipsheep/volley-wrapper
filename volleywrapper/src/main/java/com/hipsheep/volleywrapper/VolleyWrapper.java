@@ -22,6 +22,11 @@ public class VolleyWrapper {
 
 	private static RequestQueue sRequestQueue;
 
+	/**
+	 * Default configuration to use for all requests.
+	 */
+	private static Configuration sDefaultConfiguration = new Configuration();
+
 
 	/**
 	 * Initializes the Volley Wrapper library, and creates the request queue that will be used for queueing the requests to send
@@ -43,25 +48,6 @@ public class VolleyWrapper {
 	 */
 	public static void init(RequestQueue requestQueue) {
 		sRequestQueue = requestQueue;
-	}
-
-	/**
-	 * Sets a default configuration to use for all requests.
-	 *
-	 * @param configuration
-	 * 		Default configuration to use for all requests.
-	 */
-	public static void setDefaultConfiguration(Configuration configuration) {
-		BaseRequest.setDefaultConfiguration(configuration);
-	}
-
-	/**
-	 * Returns the {@link RequestQueue} used to send requests to the server.
-	 *
-	 * @return The {@link RequestQueue} used to send requests to the server.
-	 */
-	public static RequestQueue getRequestQueue() {
-		return sRequestQueue;
 	}
 
 	/**
@@ -103,13 +89,41 @@ public class VolleyWrapper {
 		sRequestQueue.add(request);
 
 		// If a sync timeout was set, then use it
-		Long syncTimeout = BaseRequest.getDefaultConfiguration().getSyncTimeout();
+		Long syncTimeout = sDefaultConfiguration.getSyncTimeout();
 		if (syncTimeout != null) {
 			// Time out if the response doesn't come back on X seconds
 			return requestFuture.get(syncTimeout, TimeUnit.SECONDS);
 		} else {
 			return requestFuture.get();
 		}
+	}
+
+	/**
+	 * Returns the {@link RequestQueue} used to send requests to the server.
+	 *
+	 * @return The {@link RequestQueue} used to send requests to the server.
+	 */
+	public static RequestQueue getRequestQueue() {
+		return sRequestQueue;
+	}
+
+	/**
+	 * Returns the default configuration to use for all requests.
+	 *
+	 * @return Default configuration to use for all requests.
+	 */
+	public static Configuration getDefaultConfiguration() {
+		return sDefaultConfiguration;
+	}
+
+	/**
+	 * Sets a default configuration to use for all requests.
+	 *
+	 * @param configuration
+	 * 		Default configuration to use for all requests.
+	 */
+	public static void setDefaultConfiguration(Configuration configuration) {
+		sDefaultConfiguration = configuration;
 	}
 
 }
