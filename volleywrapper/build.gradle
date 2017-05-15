@@ -1,4 +1,16 @@
 apply plugin: 'com.android.library'
+// Plugins used to upload the library to JCenter
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+def libVersion = '1.1.0'
+
+// JCenter package configuration
+ext {
+	PUBLISH_GROUP_ID = 'com.hipsheep'
+	PUBLISH_ARTIFACT_ID = 'volley-wrapper'
+	PUBLISH_VERSION = libVersion
+}
 
 android {
 	compileSdkVersion 25
@@ -9,7 +21,7 @@ android {
 		targetSdkVersion 25
 
 		versionCode 10100
-		versionName "1.1.0"
+		versionName libVersion
 
 		// Set AndroidJUnitRunner as the default test instrumentation runner, to use JUnit 4 test classes
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -33,7 +45,7 @@ build.finalizedBy('createJavadocJar', 'groupReleaseFiles')
 task createJavadoc(type: Javadoc) {
 	description('Creates the javadoc HTML files for all the library classes.')
 
-	source = ["src/main/java"]
+	source = android.sourceSets.main.java.srcDirs
 
 	failOnError false
 
@@ -60,8 +72,6 @@ task createJavadocJar(type: Jar, dependsOn: 'createJavadoc') {
 // them ready to upload to Maven
 task groupReleaseFiles(type: Copy) {
 	description('Copies the assembled .jar and .aar files to the root of the "build" folder and renames them using the current version.')
-
-	def libVersion = android.defaultConfig.versionName
 
 	// Copy and rename aar file
 	from('build/outputs/aar/') {
@@ -109,4 +119,60 @@ dependencies {
 	androidTestCompile 'com.android.support.test:rules:0.5'
 
 	androidTestCompile 'org.hamcrest:hamcrest-library:1.3'
+}
+
+// JCenter code
+
+def siteUrl = 'https://github.com/izacus/FuzzyDateFormatter'      // Homepage URL of the library
+def gitUrl = 'https://github.com/izacus/FuzzyDateFormatter.git'   // Git repository URL
+
+group = "<maven group id>"                                        // Maven Group ID for the artifact
+
+install {
+	repositories.mavenInstaller {
+		// This generates POM.xml with proper parameters
+		pom {
+			project {
+				packaging 'aar'
+
+				// Add your description here
+				name '<Your library description>'
+				url siteUrl
+
+				// Set your license
+				licenses {
+					license {
+						name 'The Apache Software License, Version 2.0'
+						url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					}
+				}
+				developers {
+					developer {
+						id '<your user ID>'
+						name '<your name>'
+						email '<your email>'
+					}
+				}
+				scm {
+					connection gitUrl
+					developerConnection gitUrl
+					url siteUrl
+				}
+			}
+		}
+	}
+}
+
+bintray {
+	user = properties.getProperty("bintray.user")
+	key = properties.getProperty("bintray.apikey")
+	configurations = ['archives']
+	pkg {
+		repo = "maven"
+		name = "<Your library name>"
+		websiteUrl = siteUrl
+		vcsUrl = gitUrl
+		licenses = ["Apache-2.0"]
+		publish = true
+	}
 }
