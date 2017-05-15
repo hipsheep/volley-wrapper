@@ -1,10 +1,3 @@
-repositories {
-	maven {
-		// Our Maven repo URL (it can end with "release" or "canary")
-		url "https://raw.github.com/hipsheep/volley-wrapper-distribution/canary"
-	}
-}
-
 apply plugin: 'com.android.library'
 
 android {
