@@ -44,6 +44,11 @@ public abstract class BaseRequest<T> extends Request<T> {
 	private String mUrl;
 
 	/**
+	 * Headers used on the request.
+	 */
+	private Map<String, String> mHeaders = new HashMap<>();
+
+	/**
 	 * Query parameters used on the request.
 	 */
 	private Map<String, String> mQueryParams = new HashMap<>();
@@ -78,16 +83,22 @@ public abstract class BaseRequest<T> extends Request<T> {
 	protected BaseRequest(int method, String url) {
 		super(method, url, null);
 
-		// Set whether to cache responses or not, if the user set the value through VolleyWrapper
+		// Set whether to cache responses or not (if it was set)
 		Boolean defaultIsShouldCache = sDefaultConfiguration.isShouldCache();
 		if (defaultIsShouldCache != null) {
 			setShouldCache(defaultIsShouldCache);
 		}
 
-		// Set the default retry policy, if the user set one through VolleyWrapper
+		// Set the default retry policy (if it was set)
 		RetryPolicy defaultRetryPolicy = sDefaultConfiguration.getRetryPolicy();
 		if (defaultRetryPolicy != null) {
 			setRetryPolicy(defaultRetryPolicy);
+		}
+
+		// Add the default headers (if any)
+		Map<String, String> defaultHeaders = sDefaultConfiguration.getHeaders();
+		if (defaultHeaders != null) {
+			mHeaders.putAll(defaultHeaders);
 		}
 	}
 
@@ -118,17 +129,27 @@ public abstract class BaseRequest<T> extends Request<T> {
 
 	@Override
 	public String getBodyContentType() {
-		// We must set the content type here for POST requests, otherwise the server will fail to parse
-		// the headers (because Volley uses a different content type value by default)
 		String defaultBodyContentType = sDefaultConfiguration.getBodyContentType();
 		return defaultBodyContentType != null ? defaultBodyContentType : super.getBodyContentType();
 	}
 
 	@Override
 	public Map<String, String> getHeaders() throws AuthFailureError {
-		Map<String, String> defaultHeaders = sDefaultConfiguration.getHeaders();
+		return mHeaders;
+	}
 
-		return defaultHeaders != null ? defaultHeaders : super.getHeaders();
+	/**
+	 * Adds a header to the request, but only if the header's value is not {@code null}.
+	 *
+	 * @param key
+	 * 		Key of the header to add to the request.
+	 * @param value
+	 * 		Value of the header to add to the request. If this value is {@code null} the header won't be added.
+	 */
+	protected void addHeader(String key, String value) {
+		if (value != null) {
+			mHeaders.put(key, value);
+		}
 	}
 
 	/**
