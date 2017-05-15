@@ -15,8 +15,8 @@ android {
 		minSdkVersion 9
 		targetSdkVersion 25
 
-		versionCode 10001
-		versionName "1.0.1"
+		versionCode 10100
+		versionName "1.1.0"
 
 		// Set AndroidJUnitRunner as the default test instrumentation runner, to use JUnit 4 test classes
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
