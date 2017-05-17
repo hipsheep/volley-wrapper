@@ -1,16 +1,6 @@
 apply plugin: 'com.android.library'
-// Plugins used to upload the library to JCenter
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'com.github.dcendents.android-maven'
 
-def libVersion = '1.1.0'
-
-// JCenter package configuration
-ext {
-	PUBLISH_GROUP_ID = 'com.hipsheep'
-	PUBLISH_ARTIFACT_ID = 'volley-wrapper'
-	PUBLISH_VERSION = libVersion
-}
+def libraryVersion = '1.1.0'
 
 android {
 	compileSdkVersion 25
@@ -21,7 +11,7 @@ android {
 		targetSdkVersion 25
 
 		versionCode 10100
-		versionName libVersion
+		versionName libraryVersion
 
 		// Set AndroidJUnitRunner as the default test instrumentation runner, to use JUnit 4 test classes
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -39,79 +29,20 @@ android {
 	}
 }
 
-// After the build finishes, create Javadoc and group release files on the "build" dir
-build.finalizedBy('createJavadocJar', 'groupReleaseFiles')
-
-task createJavadoc(type: Javadoc) {
-	description('Creates the javadoc HTML files for all the library classes.')
-
-	source = android.sourceSets.main.java.srcDirs
-
-	failOnError false
-
-	def androidJar = android.sdkDirectory.toString() + "/platforms/" + android.compileSdkVersion + "/android.jar"
-	classpath = files(android.libraryVariants.release.javaCompile.classpath.files, androidJar)
-
-	options {
-		links "http://docs.oracle.com/javase/7/docs/api/"
-		linksOffline "http://d.android.com/reference","${android.sdkDirectory}/docs/reference"
-	}
-
-	exclude '**/BuildConfig.java'
-	exclude '**/R.java'
-}
-
-task createJavadocJar(type: Jar, dependsOn: 'createJavadoc') {
-	description('Creates the javadoc jar for all the library classes.')
-
-	classifier = 'javadoc'
-	from 'build/docs/javadoc/'
-}
-
-// Task that copies the .aar and .jar files to the root of the "build" dir and renames them, to have
-// them ready to upload to Maven
-task groupReleaseFiles(type: Copy) {
-	description('Copies the assembled .jar and .aar files to the root of the "build" folder and renames them using the current version.')
-
-	// Copy and rename aar file
-	from('build/outputs/aar/') {
-		include '*-release.aar'
-		rename '-release.aar', '-' + libVersion + '.aar'
-	}
-
-	// Copy and rename javadoc jar file
-	from('build/libs/') {
-		include '*.jar'
-		rename 'volleywrapper', 'volleywrapper-' + libVersion
-	}
-
-	into 'build'
-}
-
-// Task that returns the current library version, needed to publish the aar to Maven
-task getVersion << {
-	println android.defaultConfig.versionName
-}
-
 def volleyVersion = '1.0.0'
 
-// Task that returns the current version of Volley being used, needed to publish the aar to Maven
-task getVolleyVersion << {
-	println volleyVersion
-}
-
 dependencies {
-	compile fileTree(dir: 'libs', include: ['*.jar'])
-
 	// Include Volley library from our Maven repository
 	compile 'com.android.volley:volley:' + volleyVersion
 
 	// The Gson library is used to easily parse JSON objects
 	compile 'com.google.code.gson:gson:2.7'
 
+	// Unit test libs
+
 	testCompile 'junit:junit:4.12'
 
-	// Instrumentation test libraries
+	// Instrumentation test libs
 
 	androidTestCompile 'com.android.support:support-annotations:25.3.1'
 
@@ -121,58 +52,31 @@ dependencies {
 	androidTestCompile 'org.hamcrest:hamcrest-library:1.3'
 }
 
-// JCenter code
+// JCenter configuration and tasks
 
-def siteUrl = 'https://github.com/izacus/FuzzyDateFormatter'      // Homepage URL of the library
-def gitUrl = 'https://github.com/izacus/FuzzyDateFormatter.git'   // Git repository URL
+ext {
+	bintrayOrg = 'hipsheep'
+	bintrayRepo = 'maven'
+	bintrayPackage = 'volley-wrapper'
 
-group = "<maven group id>"                                        // Maven Group ID for the artifact
+	mavenGroupId = 'com.hipsheep'
+	libName = 'volley-wrapper'
+	libVersion = libraryVersion
+	artifact = 'volley-wrapper'
 
-install {
-	repositories.mavenInstaller {
-		// This generates POM.xml with proper parameters
-		pom {
-			project {
-				packaging 'aar'
+	libDescription = 'A wrapper of the Volley network library for Android, which offers an easy interface to integrate and use.'
 
-				// Add your description here
-				name '<Your library description>'
-				url siteUrl
+	siteUrl = 'https://github.com/hipsheep/volley-wrapper'
+	gitUrl = 'https://github.com/hipsheep/volley-wrapper.git'
 
-				// Set your license
-				licenses {
-					license {
-						name 'The Apache Software License, Version 2.0'
-						url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-					}
-				}
-				developers {
-					developer {
-						id '<your user ID>'
-						name '<your name>'
-						email '<your email>'
-					}
-				}
-				scm {
-					connection gitUrl
-					developerConnection gitUrl
-					url siteUrl
-				}
-			}
-		}
-	}
+	developerName = 'Franco Sabadini'
+	developerEmail = 'fsabadi@gmail.com'
+
+	licenseName = 'The Apache Software License, Version 2.0'
+	licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+	allLicenses = ["Apache-2.0"]
 }
 
-bintray {
-	user = properties.getProperty("bintray.user")
-	key = properties.getProperty("bintray.apikey")
-	configurations = ['archives']
-	pkg {
-		repo = "maven"
-		name = "<Your library name>"
-		websiteUrl = siteUrl
-		vcsUrl = gitUrl
-		licenses = ["Apache-2.0"]
-		publish = true
-	}
-}
+// Import Maven and Bintray code from external files
+apply from: 'https://raw.githubusercontent.com/hipsheep/utils/master/gradle/maven.gradle'
+apply from: 'https://raw.githubusercontent.com/hipsheep/utils/master/gradle/bintray.gradle'
