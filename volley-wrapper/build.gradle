@@ -60,7 +60,7 @@ ext {
 	bintrayPackage = 'volley-wrapper'
 
 	mavenGroupId = 'com.hipsheep'
-	libName = 'volleywrapper'
+	libName = 'volley-wrapper'
 	libVersion = libraryVersion
 	artifact = 'volley-wrapper'
 
