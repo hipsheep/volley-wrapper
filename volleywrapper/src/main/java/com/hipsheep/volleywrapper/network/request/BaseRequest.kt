@@ -27,7 +27,7 @@ open class BaseRequest<T>(method: Int, url: String) : Request<T>(method, url, nu
     /**
      * Tag used to log errors, warnings, etc. on standard output, with the name of the class that extends [BaseRequest].
      */
-    val LOG_TAG = this::class.qualifiedName
+    private val LOG_TAG: String = javaClass.name
 
     /**
      * Request URL, needed as a local variable to optimize the use of the [.getUrl()] method,
@@ -47,7 +47,7 @@ open class BaseRequest<T>(method: Int, url: String) : Request<T>(method, url, nu
     /**
      * Body parameters used on the request.
      */
-    val bodyParams = HashMap<String, String>()
+    val bodyParams = HashMap<String, Any>()
 
     /**
      * Body of the request.
@@ -67,7 +67,7 @@ open class BaseRequest<T>(method: Int, url: String) : Request<T>(method, url, nu
 
 
     init {
-        val defaultConfig = VolleyWrapper.defaultConfiguration
+        val defaultConfig = VolleyWrapper.defaultConfig
 
         // Set whether to cache responses or not (if it was set)
         val defaultShouldCache = defaultConfig?.shouldCache
@@ -112,8 +112,20 @@ open class BaseRequest<T>(method: Int, url: String) : Request<T>(method, url, nu
         return url
     }
 
+    /**
+     * Adds a parameter to the request's query.
+     *
+     * @param key
+     *      Key of the param to add to the request's query.
+     * @param value
+     *      Value of the param to add to the request's query.
+     */
+    protected fun addQueryParam(key: String, value: Any) {
+        queryParams.put(key, value.toString())
+    }
+
     override fun getBodyContentType(): String {
-        return VolleyWrapper.defaultConfiguration?.bodyContentType ?: super.getBodyContentType()
+        return VolleyWrapper.defaultConfig?.bodyContentType ?: super.getBodyContentType()
     }
 
     override fun getHeaders(): MutableMap<String, String> {
@@ -158,8 +170,7 @@ open class BaseRequest<T>(method: Int, url: String) : Request<T>(method, url, nu
         requestFuture?.onErrorResponse(error)
 
         // Log error in the console for debugging purposes
-        Log.w(LOG_TAG, String.format("Request failed with error \"%s\", and no callback set for it",
-                error?.networkResponse?.statusCode ?: "null"))
+        Log.w(LOG_TAG, "Request failed with error \"${error?.networkResponse?.statusCode ?: "null"}\", and no callback set for it")
     }
 
 }

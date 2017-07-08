@@ -25,7 +25,7 @@ object VolleyWrapper {
     /**
      * Default configuration to use for all requests.
      */
-    var defaultConfiguration: Configuration? = null
+    var defaultConfig: Configuration? = null
 
 
     /**
@@ -59,7 +59,7 @@ object VolleyWrapper {
      * @param responseCallback
      * 		[ResponseCallback] that will receive the response from this request.
      */
-    fun <T> sendRequest(request: BaseRequest<T>, responseCallback: ResponseCallback<T>) {
+    fun <T> sendRequest(request: BaseRequest<T>, responseCallback: ResponseCallback<T>?) {
         // Set the callback before sending the request. We do this here so it doesn't have to be set on every request
         // constructor method
         request.responseCallback = responseCallback
@@ -92,7 +92,7 @@ object VolleyWrapper {
         requestQueue?.add(request)
 
         // If a sync timeout was set, then use it
-        val syncTimeout = defaultConfiguration?.syncTimeout
+        val syncTimeout = defaultConfig?.syncTimeout
         if (syncTimeout != null) {
             // Time out if the response doesn't come back before X seconds pass
             return requestFuture.get(syncTimeout, TimeUnit.SECONDS)

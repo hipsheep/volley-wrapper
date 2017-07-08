@@ -3,7 +3,7 @@ package com.hipsheep.volleywrapper
 import com.android.volley.RetryPolicy
 
 /**
- * Configuration that can be set to VolleyWrapper through the [VolleyWrapper.setDefaultConfiguration(Configuration)]
+ * Configuration that can be set to VolleyWrapper through the [VolleyWrapper.setDefaultConfig(Configuration)]
  * method.
  *
  * @property retryPolicy
@@ -24,5 +24,5 @@ import com.android.volley.RetryPolicy
 data class Configuration(val retryPolicy: RetryPolicy? = null,
                          val shouldCache: Boolean? = null,
                          val bodyContentType: String? = null,
-                         val headers: Map<String, String>,
-                         val syncTimeout: Long)
+                         val headers: Map<String, String>? = null,
+                         val syncTimeout: Long? = null)
