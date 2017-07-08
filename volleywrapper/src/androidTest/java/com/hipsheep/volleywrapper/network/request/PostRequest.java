@@ -1,7 +1,7 @@
-package com.hipsheep.volleywrapper.network.request;
+package com.hipsheep.volleywrapper.java.network.request;
 
-import com.hipsheep.volleywrapper.network.Params;
-import com.hipsheep.volleywrapper.network.model.Post;
+import com.hipsheep.volleywrapper.java.network.Params;
+import com.hipsheep.volleywrapper.java.network.model.Post;
 import com.hipsheep.volleywrapper.utils.GsonUtils;
 
 /**

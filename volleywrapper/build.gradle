@@ -2,7 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-def libraryVersion = '1.2.0'
+def libVersionCode = 20000
+def libraryVersion = '2.0.0-rc1'
 
 android {
 	compileSdkVersion 25
@@ -12,7 +13,7 @@ android {
 		minSdkVersion 9
 		targetSdkVersion 25
 
-		versionCode 10200
+		versionCode libVersionCode
 		versionName libraryVersion
 
 		// Set AndroidJUnitRunner as the default test instrumentation runner, to use JUnit 4 test classes

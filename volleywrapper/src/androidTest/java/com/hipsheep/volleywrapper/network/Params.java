@@ -1,4 +1,4 @@
-package com.hipsheep.volleywrapper.network;
+package com.hipsheep.volleywrapper.java.network;
 
 /**
  * Class used to keep constants that are used as parameters for the requests.

@@ -1,7 +1,7 @@
-package com.hipsheep.volleywrapper.network.model;
+package com.hipsheep.volleywrapper.java.network.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.hipsheep.volleywrapper.network.Params;
+import com.hipsheep.volleywrapper.java.network.Params;
 
 /**
  * Test response model returned from the backend as a JSON object.

@@ -5,10 +5,10 @@ import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
-import com.hipsheep.volleywrapper.network.model.Post;
-import com.hipsheep.volleywrapper.network.model.ResponseCallback;
-import com.hipsheep.volleywrapper.network.request.GetRequest;
-import com.hipsheep.volleywrapper.network.request.PostRequest;
+import com.hipsheep.volleywrapper.java.network.model.Post;
+import com.hipsheep.volleywrapper.java.network.model.ResponseCallback;
+import com.hipsheep.volleywrapper.java.network.request.GetRequest;
+import com.hipsheep.volleywrapper.java.network.request.PostRequest;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
