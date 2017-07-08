@@ -85,7 +85,7 @@ object VolleyWrapper {
      * @throws TimeoutException
      */
     @Throws(ExecutionException::class, InterruptedException::class, TimeoutException::class)
-    fun <T> sendRequest(request: BaseRequest<T>): T {
+    fun <T> sendRequest(request: BaseRequest<T>): T? {
         val requestFuture = RequestFuture.newFuture<T>()
         request.requestFuture = requestFuture
 

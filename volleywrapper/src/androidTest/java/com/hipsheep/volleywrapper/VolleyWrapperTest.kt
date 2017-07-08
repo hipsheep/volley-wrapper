@@ -211,8 +211,8 @@ class VolleyWrapperTest {
     private fun assertError(errorCode: Int, volleyError: Throwable?) {
         Log.e(LOG_TAG, "Request failed", volleyError)
 
-        if (volleyError is VolleyError) {
-            Assert.assertEquals(errorCode.toLong(), volleyError.networkResponse.statusCode.toLong())
+        if (volleyError is VolleyError?) {
+            Assert.assertEquals(errorCode, volleyError?.networkResponse?.statusCode)
         } else {
             Assert.fail()
         }
