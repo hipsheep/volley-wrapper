@@ -23,7 +23,7 @@ import java.nio.charset.Charset
  *
  * @author Franco Sabadini (fsabadi@gmail.com)
  */
-class GsonRequest<T>(method: Int,
+open class GsonRequest<T>(method: Int,
                      url: String,
                      private val responseClass: Class<T>,
                      private val gson: Gson) : BaseRequest<T>(method, url) {
