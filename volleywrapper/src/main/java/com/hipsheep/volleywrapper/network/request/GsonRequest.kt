@@ -24,9 +24,9 @@ import java.nio.charset.Charset
  * @author Franco Sabadini (fsabadi@gmail.com)
  */
 open class GsonRequest<T>(method: Int,
-                     url: String,
-                     private val responseClass: Class<T>,
-                     private val gson: Gson) : BaseRequest<T>(method, url) {
+                          url: String,
+                          private val responseClass: Class<T>,
+                          private val gson: Gson) : BaseRequest<T>(method, url) {
 
     override fun parseNetworkResponse(response: NetworkResponse?): Response<T> {
         try {
