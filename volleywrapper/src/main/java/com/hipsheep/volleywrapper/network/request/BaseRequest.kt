@@ -97,7 +97,7 @@ open class BaseRequest<T>(method: Int, url: String) : Request<T>(method, url, nu
         var url = super.getUrl()
 
         if (!queryParams.isEmpty()) {
-            var urlBuilder = Uri.parse(url).buildUpon()
+            val urlBuilder = Uri.parse(url).buildUpon()
 
             for ((key, value) in queryParams) {
                 urlBuilder.appendQueryParameter(key, value)

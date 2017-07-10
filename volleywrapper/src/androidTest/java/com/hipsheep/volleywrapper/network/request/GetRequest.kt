@@ -9,7 +9,7 @@ import com.hipsheep.volleywrapper.utils.GsonUtils
  *
  * @author Franco Sabadini (fsabadi@gmail.com)
  */
-class GetRequest(url: String, userId: Int) : GsonRequest<Array<Post>>(Method.GET, url, GsonUtils.gson) {
+class GetRequest(url: String, userId: Int) : GsonRequest<Array<Post>>(Method.GET, url, Array<Post>::class.java, GsonUtils.gson) {
 
     init {
         addQueryParam(Param.Key.USER_ID, userId)

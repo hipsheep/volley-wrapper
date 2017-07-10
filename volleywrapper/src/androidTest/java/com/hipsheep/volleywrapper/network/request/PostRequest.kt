@@ -9,7 +9,7 @@ import com.hipsheep.volleywrapper.utils.GsonUtils
  *
  * @author Franco Sabadini (fsabadi@gmail.com)
  */
-class PostRequest(url: String) : GsonRequest<Post>(Method.POST, url, GsonUtils.gson) {
+class PostRequest(url: String) : GsonRequest<Post>(Method.POST, url, Post::class.java, GsonUtils.gson) {
 
     constructor(url: String, userId: Int, title: String, body: String) : this(url) {
         // Add body params
