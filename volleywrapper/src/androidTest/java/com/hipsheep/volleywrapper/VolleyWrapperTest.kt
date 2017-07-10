@@ -11,7 +11,6 @@ import com.hipsheep.volleywrapper.network.request.GetRequest
 import com.hipsheep.volleywrapper.network.request.PostRequest
 import org.junit.Assert
 import org.junit.BeforeClass
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
@@ -40,7 +39,11 @@ class VolleyWrapperTest {
      * Test model used to send info to the backend.
      */
     private val TEST_POST_MODEL = Post(2, 101, "test title", "test body")
-    private val TEST_POST_JSON = "${Param.Key.USER_ID}=2&${Param.Key.TITLE}=test+title&${Param.Key.BODY}=test+body"
+    private val TEST_POST_JSON = """{
+                                        "${Param.Key.USER_ID}": 2,
+                                        "${Param.Key.TITLE}": "test title",
+                                        "${Param.Key.BODY}": "test body"
+                                    }"""
 
 
     companion object {
@@ -149,7 +152,8 @@ class VolleyWrapperTest {
         var post: Post? = null
 
         try {
-            post = VolleyWrapper.sendRequest(PostRequest(TEST_URL_SUCCESS, TEST_POST_JSON))
+            post = VolleyWrapper.sendRequest(PostRequest(TEST_URL_SUCCESS, TEST_POST_MODEL.userId, TEST_POST_MODEL.title,
+                    TEST_POST_MODEL.body))
         } catch (e: Exception) {
             Log.e(LOG_TAG, "POST request failed", e)
         }
@@ -157,7 +161,6 @@ class VolleyWrapperTest {
         assertPostResponse(post)
     }
 
-    @Ignore
     @Test
     fun sendRequest_POST_Async_Success() {
         val countDownLatch = CountDownLatch(1)

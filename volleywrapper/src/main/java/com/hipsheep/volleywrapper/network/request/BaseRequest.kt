@@ -139,7 +139,7 @@ open class BaseRequest<T>(method: Int, url: String) : Request<T>(method, url, nu
     override fun getBody(): ByteArray? {
         // If a body is not set, and parameters are set, then add the params into a JSON object
         // to send them on the request body
-        if (body != null && !bodyParams.isEmpty()) {
+        if (body == null && !bodyParams.isEmpty()) {
             body = JSONObject(bodyParams).toString()
         }
 
