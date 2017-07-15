@@ -42,6 +42,20 @@ task createDokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
 	outputDirectory = "$buildDir/docs/javadoc"
 }
 
+task createDokkaMarkdown(type: org.jetbrains.dokka.gradle.DokkaTask) {
+	description('Creates the KDoc Markdown files for all the Kotlin classes.')
+
+	classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+
+	outputFormat = 'gfm'
+	outputDirectory = "$buildDir/docs/markdown"
+}
+
+// Build the KDoc Markdown docs after the build, so they can be added to the public wiki
+build.finalizedBy {
+	createDokkaMarkdown
+}
+
 dependencies {
 	// Include Volley library from our Maven repository
 	implementation 'com.android.volley:volley:1.0.0'
