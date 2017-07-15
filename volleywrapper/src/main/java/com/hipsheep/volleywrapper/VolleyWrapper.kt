@@ -67,11 +67,11 @@ object VolleyWrapper {
      * Sends a request to the server synchronously, and returns the response, or throws an [Exception] if an error
      * occurred.
      *
-     * **IMPORTANT:** Don't call this method on the Main Thread or the app will freeze.
-     *
      * This method "returns" errors through the [Exception]s it throws. The [ExecutionException] is the only one of
      * the 3 that will contain a [com.android.volley.VolleyError] inside, which you can get through the
      * [ExecutionException.cause] property.
+     *
+     * IMPORTANT: Don't call this method on the Main Thread or the app will freeze.
      *
      * @param request [BaseRequest] to send to the server.
      *

@@ -48,7 +48,7 @@ open class BaseRequest<T>(method: Int, url: String) : Request<T>(method, url, nu
     val bodyParams = HashMap<String, Any>()
 
     /**
-     * Body of the request. **IMPORTANT:** If this property is set, then any params in [bodyParams] will be ignored.
+     * Body of the request. IMPORTANT: If this property is set, then any params in [bodyParams] will be ignored.
      */
     var body: String? = null
 
