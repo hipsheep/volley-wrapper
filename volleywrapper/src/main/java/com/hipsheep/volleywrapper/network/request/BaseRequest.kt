@@ -15,10 +15,8 @@ import org.json.JSONObject
 /**
  * Base class for any request that is sent to the server.
  *
- * @param method
- * 		Request method to use (see [com.android.volley.Request.Method] to see the possible options).
- * @param url
- * 		URL of the request.
+ * @param method Request method to use (see [Request.Method] to see the possible options).
+ * @param url URL of the request.
  *
  * @author Franco Sabadini (fsabadi@gmail.com)
  */
@@ -50,9 +48,7 @@ open class BaseRequest<T>(method: Int, url: String) : Request<T>(method, url, nu
     val bodyParams = HashMap<String, Any>()
 
     /**
-     * Body of the request.
-     * <p>
-     * IMPORTANT: If this property is set, then any params in [bodyParams] will be ignored.
+     * Body of the request. **IMPORTANT:** If this property is set, then any params in [bodyParams] will be ignored.
      */
     var body: String? = null
 
@@ -115,10 +111,8 @@ open class BaseRequest<T>(method: Int, url: String) : Request<T>(method, url, nu
     /**
      * Adds a parameter to the request's query.
      *
-     * @param key
-     *      Key of the param to add to the request's query.
-     * @param value
-     *      Value of the param to add to the request's query.
+     * @param key Key of the param to add to the request's query.
+     * @param value Value of the param to add to the request's query.
      */
     protected fun addQueryParam(key: String, value: Any) {
         queryParams.put(key, value.toString())

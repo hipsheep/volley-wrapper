@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.jetbrains.dokka-android'
 
 def libVersionCode = 20000
 def libraryVersion = '2.0.0-rc1'
@@ -30,6 +31,23 @@ android {
 	lintOptions {
 		abortOnError false
 	}
+}
+
+// The Dokka plugin generates the KDoc and Javadoc files
+dokka {
+	outputFormat = 'javadoc'
+	outputDirectory = "$buildDir/docs/javadoc"
+}
+
+// Build KDocs after before build (if this is not run before the build then no javadoc files will be added to the
+// javadoc.jar)
+build.doFirst {
+	dokka
+}
+
+// Disable javadoc tasks because they will override the files created by the dokka task
+tasks.withType(Javadoc).all {
+	enabled = false
 }
 
 dependencies {

@@ -12,14 +12,10 @@ import java.nio.charset.Charset
 /**
  * Request that receives a JSON response, and uses the Gson library to parse it to an object.
  *
- * @param method
- * 		Request method to use (see [com.android.volley.Request.Method] to see the possible options).
- * @param url
- * 		URL of the request.
- * @param responseClass
- *      Class type of the object that will be returned as a response to the request.
- * @param gson
- * 		[Gson] object that will be used to parse the response.
+ * @param method Request method to use (see [com.android.volley.Request.Method] to see the possible options).
+ * @param url URL of the request.
+ * @param responseClass Class type of the object that will be returned as a response to the request.
+ * @param gson [Gson] object that will be used to parse the response.
  *
  * @author Franco Sabadini (fsabadi@gmail.com)
  */
