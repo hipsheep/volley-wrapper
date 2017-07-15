@@ -33,19 +33,13 @@ android {
 	}
 }
 
-// The Dokka plugin generates the KDoc and Javadoc files
-dokka {
+task createDokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+	description('Creates the javadoc HTML files for all the Kotlin classes.')
+
+	classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+
 	outputFormat = 'javadoc'
 	outputDirectory = "$buildDir/docs/javadoc"
-}
-
-// Build KDocs after before build (if this is not run before the build then no javadoc files will be added to the
-// javadoc.jar)
-build.dependsOn(dokka)
-
-// Disable javadoc tasks because they will override the files created by the dokka task
-tasks.withType(Javadoc).all {
-	enabled = false
 }
 
 dependencies {
@@ -95,6 +89,15 @@ ext {
 	allLicenses = ["Apache-2.0"]
 }
 
-// Import Maven and Bintray code from external files
+// Import Maven and Bintray tasks from external files
 apply from: 'https://raw.githubusercontent.com/hipsheep/utils/master/gradle/maven.gradle'
 apply from: 'https://raw.githubusercontent.com/hipsheep/utils/master/gradle/bintray.gradle'
+
+// Modify the dependencies of createJavadocJar so it uses the javadoc created from the Kotlin files.
+// The createJavadocJar task is imported from https://github.com/hipsheep/utils/blob/master/gradle/bintray.gradle
+createJavadocJar.dependsOn(createDokkaJavadoc)
+
+// Disable javadoc tasks because they will override the files created by the createDokkaJavadoc task
+tasks.withType(Javadoc).all {
+	enabled = false
+}
