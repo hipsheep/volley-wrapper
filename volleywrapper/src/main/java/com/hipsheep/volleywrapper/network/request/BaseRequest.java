@@ -25,7 +25,7 @@ import java.util.Map;
  *
  * @author Franco Sabadini (fsabadi@gmail.com)
  */
-public abstract class BaseRequest<T> extends Request<T> {
+public class BaseRequest<T> extends Request<T> {
 
 	/**
 	 * Tag used to log errors, warnings, etc. on standard output, with the name of the class that extends {@link BaseRequest}.

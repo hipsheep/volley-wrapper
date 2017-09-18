@@ -14,7 +14,7 @@ import java.io.UnsupportedEncodingException;
  *
  * @author Franco Sabadini (fsabadi@gmail.com)
  */
-public abstract class GsonRequest<T> extends BaseRequest<T> {
+public class GsonRequest<T> extends BaseRequest<T> {
 
 	private final Class<T> mResponseClass;
 
