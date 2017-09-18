@@ -75,7 +75,7 @@ public class BaseRequest<T> extends Request<T> {
 	 * @param url
 	 * 		URL of the request.
 	 */
-	protected BaseRequest(int method, String url) {
+	public BaseRequest(int method, String url) {
 		super(method, url, null);
 
 		Configuration defaultConfiguration = VolleyWrapper.getDefaultConfiguration();

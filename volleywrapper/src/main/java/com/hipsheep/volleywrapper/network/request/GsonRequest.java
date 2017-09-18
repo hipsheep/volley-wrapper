@@ -19,7 +19,7 @@ public class GsonRequest<T> extends BaseRequest<T> {
 
 	private final Class<T> mResponseClass;
 
-	protected Gson mGson;
+	private Gson mGson;
 
 
 	/**
@@ -36,7 +36,7 @@ public class GsonRequest<T> extends BaseRequest<T> {
 	 * @param responseClass
 	 * 		Class type of the object that will be returned as a response to the request.
 	 */
-	protected GsonRequest(int method, String url, Class<T> responseClass) {
+	public GsonRequest(int method, String url, Class<T> responseClass) {
 		this(method, url, responseClass, GsonUtils.getReusableGson());
 	}
 
@@ -52,7 +52,7 @@ public class GsonRequest<T> extends BaseRequest<T> {
 	 * @param gson
 	 * 		{@link Gson} object that will be used to parse the response.
 	 */
-	protected GsonRequest(int method, String url, Class<T> responseClass, Gson gson) {
+	public GsonRequest(int method, String url, Class<T> responseClass, Gson gson) {
 		super(method, url);
 
 		mResponseClass = responseClass;
