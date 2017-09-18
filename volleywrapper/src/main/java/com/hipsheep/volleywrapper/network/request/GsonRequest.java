@@ -6,6 +6,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.hipsheep.volleywrapper.util.GsonUtils;
 
 import java.io.UnsupportedEncodingException;
 
@@ -20,6 +21,24 @@ public class GsonRequest<T> extends BaseRequest<T> {
 
 	protected Gson mGson;
 
+
+	/**
+	 * Constructor method for requests that return JSON responses.
+	 * <p>
+	 * This constructor will call {@link #GsonRequest(int, String, Class, Gson)} passing the parameters received for
+	 * the first three ones, and the {@link Gson} object returned from {@link GsonUtils#getReusableGson()} as the last
+	 * one.
+	 *
+	 * @param method
+	 * 		Request method to use (see {@link com.android.volley.Request.Method} to see the possible options).
+	 * @param url
+	 * 		URL of the request.
+	 * @param responseClass
+	 * 		Class type of the object that will be returned as a response to the request.
+	 */
+	protected GsonRequest(int method, String url, Class<T> responseClass) {
+		this(method, url, responseClass, GsonUtils.getReusableGson());
+	}
 
 	/**
 	 * Constructor method for requests that return JSON responses.
